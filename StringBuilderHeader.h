@@ -1,22 +1,25 @@
+#pragma once
 
+#ifndef STRING_HEADER
+#define STRING_HEADER
+#define _CRT_SECURE_NO_WARNINGS
 
-#ifndef STRINGLIBRARY_STRING_H
-#define STRINGLIBRARY_STRING_H
-
-class StringBuilder {
+class String {
 
 	const char* string{};
 
 
 public:
 
-	StringBuilder();
+	String();
 
-	explicit StringBuilder(const char* string);
+	explicit String(const char* string);
+
+	void getString();
 
 	void concatenate(const char* string);
 
-	~StringBuilder() { delete string; }
+	~String() { delete string; }
 };
 
 #endif

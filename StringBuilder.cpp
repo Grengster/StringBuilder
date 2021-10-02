@@ -4,21 +4,42 @@
 #include "StringBuilderHeader.h"
 #include <iostream>
 
-StringBuilder::StringBuilder() = default;
+//String::String() = default;
 
-StringBuilder::StringBuilder(const char* string)
-{
-	std::cout << string << std::endl;
-	//array mit new cahrs, sizeofstring usw
-}
+String::String(const char* input)
+	{
+		int buffer = strlen(input) + 1;
 
-// Run program: Ctrl + F5 or Debug > Start Without Debugging menu
-// Debug program: F5 or Debug > Start Debugging menu
+		// allocate mem with \0:
+		char* conString = new char[buffer];
 
-// Tips for Getting Started: 
-//   1. Use the Solution Explorer window to add/manage files
-//   2. Use the Team Explorer window to connect to source control
-//   3. Use the Output window to see build output and other messages
-//   4. Use the Error List window to view errors
-//   5. Go to Project > Add New Item to create new code files, or Project > Add Existing Item to add existing code files to the project
-//   6. In the future, to open this project again, go to File > Open > Project and select the .sln file
+		// copy str onto char*:
+		strcpy(conString, input);
+
+		// insert input to class string
+		string = conString;
+
+	}
+
+	void String::getString()
+	{
+		std::cout << this->string << std::endl;
+	}
+
+	void String::concatenate(const char* input)
+	{
+		// calculate the required buffer size (also accounting for the null terminator):
+		int buffer = strlen(string) + strlen(input) + 2;
+
+		// allocate enough memory for the concatenated string:
+		char* conString = new char[buffer];
+		strcpy(conString, string);
+		strcat(conString, " ");
+		delete string;
+		string = new char[buffer];
+		// copy strings one and two over to the new buffer:
+		strcat(conString, input);
+
+		string = conString;
+		//array mit new cahrs, sizeofstring usw
+	}

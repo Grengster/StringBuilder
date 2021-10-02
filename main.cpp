@@ -6,7 +6,30 @@
 
 int main()
 {
-    StringBuilder builder("Hi");
+    //Teil 1
+    String myString("Hello");
+    myString.getString();
+    myString.concatenate("World");
+    myString.getString();
+    /*myString.concatenate(myString);
+    String otherString(myString);
+    String yetAnotherString("AnotherWorld");
+    otherString = yetAnotherString;
+    std::cout << otherString.c_str();
+
+    // Teil 2
+    String s1("Hello");
+    const String s2("World");
+    s1 += s2;
+    String s3 = s1 + s2;
+    s3 += "Hello";
+    const String s4 = s3 + "World";
+    puts(s4);
+
+    //Teil 3
+    const String test("Hello World");
+    for (String::Iterator it = test.begin(); it != test.end(); ++it) { std::cout << *it << '\n'; }
+    std::cout << (std::find(test.begin(), test.end(), 'W') != test.end()) << '\n';*/
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
