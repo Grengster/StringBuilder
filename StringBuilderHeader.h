@@ -13,11 +13,12 @@ public:
 
 	String();
 
-	explicit String(const char* string);
+	 String(const char* string);
 
 	void getString();
 
 	void concatenate(const char* string);
+	void concatenate(const String& object);
 
 	~String() { delete string; }
 };

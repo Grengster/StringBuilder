@@ -7,17 +7,17 @@
 int main()
 {
     //Teil 1
-    String myString("Hello");
-    myString.getString();
+    String myString("Hello");;
     myString.concatenate("World");
     myString.getString();
-    /*myString.concatenate(myString);
+    myString.concatenate(myString);
+    myString.getString();
     String otherString(myString);
     String yetAnotherString("AnotherWorld");
     otherString = yetAnotherString;
     std::cout << otherString.c_str();
 
-    // Teil 2
+    /*// Teil 2
     String s1("Hello");
     const String s2("World");
     s1 += s2;
