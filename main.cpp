@@ -14,8 +14,9 @@ int main()
     myString.getString();
     String otherString(myString);
     String yetAnotherString("AnotherWorld");
-    otherString = yetAnotherString;
-    std::cout << otherString.c_str();
+    //otherString = yetAnotherString; // overload = operator to overwrite left class with right class || placement new???
+    //std::cout << otherString.c_str(); // classObj->~String(); 
+                                        // classObj = new (classObj) String("test");
 
     /*// Teil 2
     String s1("Hello");

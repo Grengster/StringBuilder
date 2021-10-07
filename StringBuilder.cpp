@@ -21,6 +21,21 @@
 
 	}
 
+	String::String(const String& obj)
+	{
+		int buffer = sizeof(obj.string) + 2;
+
+		// allocate mem with \0:
+		char* conString = new char[buffer];
+
+		// copy str onto char*:
+		memcpy(conString, obj.string + '\0', buffer);
+
+		// insert input to class string
+		string = conString;
+
+	}
+
 
 	void String::getString()
 	{

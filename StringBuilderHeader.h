@@ -13,7 +13,8 @@ public:
 
 	String();
 
-	 String(const char* string);
+	String(const char* string);
+	String(const String &obj);
 
 	void getString();
 
