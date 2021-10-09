@@ -14,8 +14,13 @@ public:
 	String();
 
 	String(const char* string);
-	String(const String &obj);
+	String(const String& obj);
 	String& operator= (const String& other) noexcept;
+	String& operator=(String&& other) noexcept;
+	String& operator+= (const String& other);
+	String& operator+= (const char* string);
+	String& operator+ (const String& other);
+	String& operator+ (const char* string);
 
 	int getLength(const char* string, bool withNull);
 	void getString();
