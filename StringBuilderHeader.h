@@ -10,9 +10,6 @@ class String {
 
 
 public:
-
-	String();
-
 	String(const char* string);
 	String(const String& obj);
 	String& operator= (const String& other) noexcept;
@@ -27,9 +24,13 @@ public:
 	void concatenate(const char* string);
 	void concatenate(const String& object);
 	const char* c_str();
-
-
 	~String() { delete string; }
+	
+	static class Iterator
+	{ // nested class
+		static void begin(const String& other);
+		static void end(const String& other);
+	};
 };
 
 #endif

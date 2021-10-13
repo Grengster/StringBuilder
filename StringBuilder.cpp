@@ -12,13 +12,13 @@
 		int stringSize = getLength(input, true);
 
 		// allocate mem with \0:
-		char* conString = new char[stringSize];
+		char* conString = new char[stringSize];			//Memory (in heap) char angelegt
 
 		// copy str onto char*:
-		memcpy(conString, input + '\0', stringSize);
+		memcpy(conString, input + '\0', stringSize);	//legt an stelle in memory
 
 		// insert input to class string
-		string = conString;
+		string = conString;								// weißt dem Klassenattribut pointer zu stelle in memory zu
 	}
 
 	String::String(const String& obj)
@@ -67,7 +67,7 @@
 			return *this;
 		this->concatenate(other);
 		return *this;
-	}
+	}  
 
 	String& String::operator+= (const char* string)
 	{
@@ -104,7 +104,7 @@
 		std::cout << this->string << std::endl;
 	}
 
-	void String::concatenate(const char* input)
+	void String::concatenate(const char* input) 
 	{
 		// calculate the required buffer size (also accounting for the null terminator):
 		int stringSize = getLength(string);
@@ -150,32 +150,10 @@
 		return this->string;
 	}
 
-	/*
-#include<iostream>
-using namespace std;
+	void String::Iterator::begin(const String& other) {
+		std::cout << "Test" << std::endl;
+	}
 
-class Point
-{
-private:
-	int x, y;
-public:
-	Point(int x1, int y1) { x = x1; y = y1; }
+	void String::Iterator::end(const String& other) {
 
-	// Copy constructor
-	Point(const Point &p1) {x = p1.x; y = p1.y; }
-
-	int getX()            {  return x; }
-	int getY()            {  return y; }
-};
-
-int main()
-{
-	Point p1(10, 15); // Normal constructor is called here
-	Point p2 = p1; // Copy constructor is called here
-
-	// Let us access values assigned by constructors
-	cout << "p1.x = " << p1.getX() << ", p1.y = " << p1.getY();
-	cout << "\np2.x = " << p2.getX() << ", p2.y = " << p2.getY();
-
-	return 0;
-}*/
+	}

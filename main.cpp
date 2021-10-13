@@ -26,11 +26,11 @@ int main()
     const String s4 = s3 + "World";
     s3.getString();
     //puts(s4);
-    /*
+   
     //Teil 3
     const String test("Hello World");
     for (String::Iterator it = test.begin(); it != test.end(); ++it) { std::cout << *it << '\n'; }
-    std::cout << (std::find(test.begin(), test.end(), 'W') != test.end()) << '\n';*/
+    std::cout << (std::find(test.begin(), test.end(), 'W') != test.end()) << '\n';
 }
 
 
