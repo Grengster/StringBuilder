@@ -8,7 +8,6 @@ class String {
 
 	const char* string{};
 
-
 public:
 	String(const char* string);
 	String(const String& obj);
@@ -24,13 +23,17 @@ public:
 	void concatenate(const char* string);
 	void concatenate(const String& object);
 	const char* c_str();
+	void begin();
+	bool end();
 	~String() { delete string; }
 	
-	static class Iterator
+	class Iterator
 	{ // nested class
-		static void begin(const String& other);
-		static void end(const String& other);
+		public:
+			int* p;
+			int curChar = 0;
 	};
+	Iterator it;
 };
 
 #endif

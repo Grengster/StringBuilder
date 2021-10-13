@@ -19,6 +19,7 @@
 
 		// insert input to class string
 		string = conString;								// weißt dem Klassenattribut pointer zu stelle in memory zu
+		
 	}
 
 	String::String(const String& obj)
@@ -150,10 +151,18 @@
 		return this->string;
 	}
 
-	void String::Iterator::begin(const String& other) {
-		std::cout << "Test" << std::endl;
+	void String::begin() {
+		char c = this->string[it.curChar];
+		const void* pv = &(this->string[it.curChar]);
+		//set iterator to current letetr and output letter with pointer *itr in test function
+		//++it ??????
 	}
-
-	void String::Iterator::end(const String& other) {
-
+	bool String::end() {
+		//get Iterator by overloading = operator
+		int lastChar = this->getLength(this->string);
+		const void* pv = &(this->string[lastChar]);
+		if (it.p != pv)
+			return false;
+		else
+			return true;
 	}
