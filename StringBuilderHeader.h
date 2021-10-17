@@ -17,6 +17,7 @@ public:
 	String& operator+= (const char* string);
 	String& operator+ (const String& other);
 	String& operator+ (const char* string);
+	
 
 	int getLength(const char* string, bool withNull);
 	void getString();
@@ -30,10 +31,14 @@ public:
 	class Iterator
 	{ // nested class
 		public:
-			int* p;
+			const void* p;
 			int curChar = 0;
 	};
 	Iterator it;
+
+	const char* c_str();
+	operator const char* ();
+
 };
 
 #endif

@@ -152,8 +152,10 @@
 	}
 
 	void String::begin() {
+		Iterator begin;
 		char c = this->string[it.curChar];
 		const void* pv = &(this->string[it.curChar]);
+		begin.p = pv;
 		//set iterator to current letetr and output letter with pointer *itr in test function
 		//++it ??????
 	}
@@ -165,4 +167,12 @@
 			return false;
 		else
 			return true;
+	}
+	
+	const char* String::c_str(){
+		return this->string; 
+	}
+
+	String::operator const char* () {
+		return this->string;
 	}

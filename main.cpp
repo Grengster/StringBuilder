@@ -25,10 +25,10 @@ int main()
     s3 += "Hello";
     const String s4 = s3 + "World";
     s3.getString();
-    //puts(s4);
+    //puts(s4); why not work??
    
     //Teil 3
-    const String test("Hello World");
+    const String test("Hello World"); // how to convert test.begin to it
     for (String::Iterator it = test.begin(); it != test.end(); ++it) { std::cout << *it << '\n'; }
     std::cout << (std::find(test.begin(), test.end(), 'W') != test.end()) << '\n';
 }
