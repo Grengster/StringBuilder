@@ -9,10 +9,10 @@ class String {
 	const char* string{};
 
 public:
-	String(const char* string);
-	String(const String& obj);
+	String(const char* string); //copy const
+	String(const String& obj); //copy const
 	String& operator= (const String& other) noexcept;
-	String& operator= (String&& other) noexcept;
+	String& operator= (String&& other) noexcept; //move const
 	String& operator+= (const String& other);
 	String& operator+= (const char* string);
 	String& operator+ (const String& other);

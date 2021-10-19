@@ -59,6 +59,8 @@
 	String& String::operator=(String&& other) noexcept
 	{
 		string = std::move(other.string);
+		delete[] other.string;
+		other.string = nullptr; // move const deletes value of other obj, nullptr for safety
 		return *this;
 	}
 
