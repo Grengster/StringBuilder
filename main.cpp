@@ -17,7 +17,7 @@ int main()
                                         // classObj = new (classObj) String("test");
 
     // Teil 2
-    String s1("Hello");
+    /*String s1("Hello");
     const String s2("World");
     s1 += s2;
     s1.getString();
@@ -30,7 +30,7 @@ int main()
     //Teil 3
     const String test("Hello World"); // how to convert test.begin to it
     for (String::Iterator it = test.begin(); it != test.end(); ++it) { std::cout << *it << '\n'; }
-    std::cout << (std::find(test.begin(), test.end(), 'W') != test.end()) << '\n';
+    std::cout << (std::find(test.begin(), test.end(), 'W') != test.end()) << '\n';*/
 }
 
 

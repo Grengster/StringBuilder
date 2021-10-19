@@ -8,8 +8,8 @@
 
 	String::String(const char* input)
 	{
-		//int buffer = sizeof(input);
-		int stringSize = getLength(input, true);
+		//size_t buffer = sizeof(input);
+		size_t stringSize = getLength(input, true);
 
 		// allocate mem with \0:
 		char* conString = new char[stringSize];			//Memory (in heap) char angelegt
@@ -18,13 +18,13 @@
 		memcpy(conString, input + '\0', stringSize);	//legt an stelle in memory
 
 		// insert input to class string
-		string = conString;								// weißt dem Klassenattribut pointer zu stelle in memory zu
+		string = conString;								// weißt dem Klassenattribut posize_ter zu stelle in memory zu
 		
 	}
 
 	String::String(const String& obj)
 	{
-		int stringSize = getLength(obj.string, true);
+		size_t stringSize = getLength(obj.string, true);
 
 		// allocate mem with \0:
 		char* conString = new char[stringSize];
@@ -43,7 +43,7 @@
 		if (this == &other)
 			return *this; // delete[]/size=0 would also be ok
 
-		int stringSize = getLength(other.string, true);
+		size_t stringSize = getLength(other.string, true);
 
 		// allocate mem with \0:
 		char* conString = new char[stringSize];
@@ -91,9 +91,9 @@
 	}
 
 
-	int String::getLength(const char* string, bool withNull = false)
+	size_t String::getLength(const char* string, bool withNull = false)
 	{
-		int stringSize = 0;
+		size_t stringSize = 0;
 		while (string[stringSize] != '\0')
 			stringSize++;
 		if(withNull) stringSize++;
@@ -108,9 +108,9 @@
 	void String::concatenate(const char* input) 
 	{
 		// calculate the required buffer size (also accounting for the null terminator):
-		int stringSize = getLength(string);
+		size_t stringSize = getLength(string);
 
-		int buffer = stringSize + sizeof(input) + 2;
+		size_t buffer = stringSize + sizeof(input) + 2;
 		
 		// allocate enough memory for the concatenated string:
 		char* conString = new char[buffer];
@@ -128,10 +128,10 @@
 	void String::concatenate(const String& object)
 	{
 		// calculate the required buffer size (also accounting for the null terminator):
-		int stringSize = getLength(string);
-		int objectSize = getLength(object.string);
+		size_t stringSize = getLength(string);
+		size_t objectSize = getLength(object.string);
 
-		int buffer = stringSize + objectSize + 1;
+		size_t buffer = stringSize + objectSize + 1;
 
 		// allocate enough memory for the concatenated string:
 		char* conString = new char[buffer];
@@ -146,8 +146,7 @@
 		string = conString;
 	}
 
-	const char* String::c_str()
-	{
+	const char* String::c_str() {
 		return this->string;
 	}
 
@@ -156,12 +155,12 @@
 		char c = this->string[it.curChar];
 		const void* pv = &(this->string[it.curChar]);
 		begin.p = pv;
-		//set iterator to current letetr and output letter with pointer *itr in test function
+		//set iterator to current letter and output letter with posize_ter *itr in test function
 		//++it ??????
 	}
 	bool String::end() {
 		//get Iterator by overloading = operator
-		int lastChar = this->getLength(this->string);
+		size_t lastChar = this->getLength(this->string);
 		const void* pv = &(this->string[lastChar]);
 		if (it.p != pv)
 			return false;
@@ -169,9 +168,7 @@
 			return true;
 	}
 	
-	const char* String::c_str(){
-		return this->string; 
-	}
+	
 
 	String::operator const char* () {
 		return this->string;

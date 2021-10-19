@@ -12,14 +12,14 @@ public:
 	String(const char* string);
 	String(const String& obj);
 	String& operator= (const String& other) noexcept;
-	String& operator=(String&& other) noexcept;
+	String& operator= (String&& other) noexcept;
 	String& operator+= (const String& other);
 	String& operator+= (const char* string);
 	String& operator+ (const String& other);
 	String& operator+ (const char* string);
 	
 
-	int getLength(const char* string, bool withNull);
+	size_t getLength(const char* string, bool withNull);
 	void getString();
 	void concatenate(const char* string);
 	void concatenate(const String& object);
@@ -35,8 +35,6 @@ public:
 			int curChar = 0;
 	};
 	Iterator it;
-
-	const char* c_str();
 	operator const char* ();
 
 };
