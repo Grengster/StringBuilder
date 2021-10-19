@@ -41,7 +41,7 @@
 	String& String::operator= (const String& other) noexcept
 	{
 		if (this == &other)
-			return *this; // delete[]/size=0 would also be ok
+			return *this; // delete[][]/size=0 would also be ok
 
 		size_t stringSize = getLength(other.string, true);
 
@@ -119,7 +119,7 @@
 
 		memcpy(conString + stringSize, input + '\0', sizeof(input) + 2);
 
-		delete string;
+		delete[] string;
 		string = new char[buffer];
 		
 		string = conString;
@@ -140,7 +140,7 @@
 
 		memcpy(conString + stringSize, object.string + '\0', objectSize + 1);
 
-		delete string;
+		delete[] string;
 		string = new char[buffer];
 
 		string = conString;

@@ -9,7 +9,9 @@ int main()
     //Teil 1
     String myString("Hello");
     myString.concatenate("World");
+    myString.getString();
     myString.concatenate(myString);
+    myString.getString();
     String otherString(myString);
     String yetAnotherString("AnotherWorld");
     otherString = yetAnotherString; // overload = operator to overwrite left class with right class || placement new???
