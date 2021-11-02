@@ -9,6 +9,7 @@ class String {
 	const char* string{};
 
 public:
+	//String() = default;
 	String(const char* string); //copy const
 	String(const String& obj); //copy const
 	String& operator= (const String& other) noexcept;
@@ -24,6 +25,7 @@ public:
 	void concatenate(const char* string);
 	void concatenate(const String& object);
 	const char* c_str();
+	const char* puts();
 	void begin();
 	bool end();
 	~String() { delete string; }

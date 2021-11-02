@@ -4,7 +4,7 @@
 #include "StringBuilderHeader.h"
 #include <iostream>
 
-//String::String() = default;
+	//String::String() = default;
 
 	String::String(const char* input)
 	{
@@ -74,16 +74,16 @@
 
 	String& String::operator+= (const char* string)
 	{
-		this->concatenate(string);
-		return *this;
+		String newString(this->string);
+		newString.concatenate(string);
+		return newString;
 	}
 
 	String& String::operator+ (const String& other)
 	{
-		if (this == &other)
-			return *this;
-		this->concatenate(other);
-		return *this;
+		String newString(this->string);
+		newString.concatenate(other);	//returns current object with added other object, if new object is needed,
+		return newString;				//just create new String, add this first and then other, return new object
 	}
 
 	String& String::operator+ (const char* string)
@@ -149,6 +149,11 @@
 	}
 
 	const char* String::c_str() {
+		return this->string;
+	}
+
+	const char* String::puts()
+	{
 		return this->string;
 	}
 

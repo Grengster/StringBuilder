@@ -28,7 +28,7 @@ int main()
     const String s4 = s3 + "World";
     //puts(s4); why not work??
    /*
-    //Teil 3
+    //Teil 3 //using declarations for iterator char pointer char reference, speichergröße -> character
     const String test("Hello World"); // how to convert test.begin to it
     for (String::Iterator it = test.begin(); it != test.end(); ++it) { std::cout << *it << '\n'; }
     std::cout << (std::find(test.begin(), test.end(), 'W') != test.end()) << '\n';*/
