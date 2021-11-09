@@ -157,11 +157,12 @@
 	}
 
 
-	void String::begin() {
-		Iterator begin;
-		char c = this->string[it.curChar];
-		const void* pv = &(this->string[it.curChar]);
+	String::Iterator begin() {
+		String::Iterator begin;
+		char c = this.string[begin.curChar]; //c_str -> pointer zurückgeben, adresse
+		const void* pv = &(this->string[begin.curChar]);
 		begin.p = pv;
+		return begin;
 		//set iterator to current letter and output letter with posize_ter *itr in test function
 		//++it ??????
 	}

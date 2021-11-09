@@ -20,13 +20,13 @@ public:
 	String operator+ (const String& other);
 	String operator+ (const char* string);
 	
-
+	class Iterator;
 	size_t getLength(const char* string, bool withNull);
 	const char* getString();
 	void concatenate(const char* string);
 	void concatenate(const String& object);
 	const char* c_str();
-	void begin();
+	Iterator begin();
 	bool end();
 	~String() { delete string; }
 	
