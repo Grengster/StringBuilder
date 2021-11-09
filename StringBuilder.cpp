@@ -4,7 +4,7 @@
 #include "StringBuilderHeader.h"
 #include <iostream>
 
-	//String::String() = default;
+	String::String() = default;
 
 	String::String(const char* input)
 	{
@@ -64,32 +64,36 @@
 		return *this;
 	}
 
-	String& String::operator+= (const String& other) 
+	String String::operator+= (const String& other) 
 	{
-		if (this == &other)
-			return *this;
-		this->concatenate(other);
+		String newString(this->string);
+		newString.concatenate(other);	//returns current object with added other object, if new object is needed,
+		this->~String();
+		*this = newString;
 		return *this;
 	}  
 
-	String& String::operator+= (const char* string)
+	String String::operator+= (const char* string)
 	{
 		String newString(this->string);
 		newString.concatenate(string);
-		return newString;
+		this->~String();
+		*this = newString;
+		return *this;
 	}
 
-	String& String::operator+ (const String& other)
+	String String::operator+ (const String& other)
 	{
 		String newString(this->string);
 		newString.concatenate(other);	//returns current object with added other object, if new object is needed,
 		return newString;				//just create new String, add this first and then other, return new object
 	}
 
-	String& String::operator+ (const char* string)
+	String String::operator+ (const char* string)
 	{
-		this->concatenate(string);
-		return *this;
+		String newString(this->string);
+		newString.concatenate(string);	//returns current object with added other object, if new object is needed,
+		return newString;
 	}
 
 
@@ -102,9 +106,9 @@
 		return stringSize;
 	}
 
-	void String::getString()
+	const char* String::getString()
 	{
-		std::cout << this->string << std::endl;
+		return string;
 	}
 
 	void String::concatenate(const char* input) 
@@ -152,10 +156,6 @@
 		return this->string;
 	}
 
-	const char* String::puts()
-	{
-		return this->string;
-	}
 
 	void String::begin() {
 		Iterator begin;
@@ -175,8 +175,12 @@
 			return true;
 	}
 	
-	
-
 	String::operator const char* () {
 		return this->string;
+	}
+
+	int puts(String obj)
+	{
+		std::cout << obj.getString() << std::endl;
+		return 1;
 	}

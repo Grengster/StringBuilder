@@ -6,26 +6,26 @@
 
 class String {
 
-	const char* string{};
+	const char* string;
+	
 
 public:
-	//String() = default;
+	String();
 	String(const char* string); //copy const
 	String(const String& obj); //copy const
 	String& operator= (const String& other) noexcept;
 	String& operator= (String&& other) noexcept; //move const
-	String& operator+= (const String& other);
-	String& operator+= (const char* string);
-	String& operator+ (const String& other);
-	String& operator+ (const char* string);
+	String operator+= (const String& other);
+	String operator+= (const char* string);
+	String operator+ (const String& other);
+	String operator+ (const char* string);
 	
 
 	size_t getLength(const char* string, bool withNull);
-	void getString();
+	const char* getString();
 	void concatenate(const char* string);
 	void concatenate(const String& object);
 	const char* c_str();
-	const char* puts();
 	void begin();
 	bool end();
 	~String() { delete string; }
@@ -40,5 +40,7 @@ public:
 	operator const char* ();
 
 };
+
+int puts(String obj);
 
 #endif

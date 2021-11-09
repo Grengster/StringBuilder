@@ -15,19 +15,17 @@ int main()
     String otherString(myString);
     String yetAnotherString("AnotherWorld");
     otherString = yetAnotherString; // overload = operator to overwrite left class with right class || placement new???
-    std::cout << otherString.c_str(); // classObj->~String(); 
-                                        // classObj = new (classObj) String("test");
+    std::cout << otherString.c_str() << std::endl; 
 
     // Teil 2
     String s1("Hello");
     const String s2("World");
     s1 += s2;
-    s1.getString();
     String s3 = s1 + s2;
     s3 += "Hello";
     const String s4 = s3 + "World";
-    //puts(s4); why not work??
-   /*
+    puts(s4);
+    /*
     //Teil 3 //using declarations for iterator char pointer char reference, speichergröße -> character
     const String test("Hello World"); // how to convert test.begin to it
     for (String::Iterator it = test.begin(); it != test.end(); ++it) { std::cout << *it << '\n'; }
