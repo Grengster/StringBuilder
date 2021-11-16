@@ -26,7 +26,7 @@ public:
 	void concatenate(const char* string);
 	void concatenate(const String& object);
 	const char* c_str();
-	Iterator begin();
+	String::Iterator begin() const;
 	bool end();
 	~String() { delete string; }
 	
