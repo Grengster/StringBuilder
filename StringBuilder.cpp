@@ -157,18 +157,29 @@
 	}
 
 	String::Iterator String::begin() const {
-		it.p = string[0]; //blabla üointer zu first char
+		*this->it.p = string[0]; 
+		std::cout << it.p << std::endl;
 		return it;
 	}
-	bool String::end() {
-		//get Iterator by overloading = operator
-		size_t lastChar = this->getLength(this->string);
-		const void* pv = &(this->string[lastChar]);
-		if (it.p != pv)
-			return false;
-		else
-			return true;
+	String::Iterator String::end() const {
+		size_t stringSize = 0;
+		while (string[stringSize] != '\0')
+			stringSize++;
+		*this->it.p = string[stringSize];
+		std::cout << it.p << std::endl;
+		return it;
 	}
+
+	bool operator != (const String::Iterator& lhs, const String::Iterator& rhs){
+		return (lhs.p == rhs.p);
+	}
+
+	String::Iterator& String::operator++() {
+		this->it.p++; return this->it;
+	}
+
+
+
 	
 	String::operator const char* () {
 		return this->string;

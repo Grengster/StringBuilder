@@ -26,17 +26,22 @@ public:
 	void concatenate(const char* string);
 	void concatenate(const String& object);
 	const char* c_str();
-	String::Iterator begin() const;
-	bool end();
-	~String() { delete string; }
+	~String() { delete string; }	
 	
 	class Iterator
 	{ // nested class
 		public:
-			const void* p;
+			char* p = nullptr;
 			int curChar = 0;
+			size_t charCount = 0;
 	};
 	Iterator it;
+
+	String::Iterator begin() const;
+	String::Iterator end() const;
+	friend bool operator != (const Iterator& lhs, const Iterator& rhs);
+	String::Iterator& operator++();
+
 	operator const char* ();
 
 };
