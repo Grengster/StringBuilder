@@ -9,31 +9,34 @@
 	String::String(const char* input)
 	{
 		//size_t buffer = sizeof(input);
-		size_t stringSize = getLength(input, true);
+		arr_size = getLength(input, true);
 
 		// allocate mem with \0:
-		char* conString = new char[stringSize];			//Memory (in heap) char angelegt
+		char* conString = new char[arr_size];			//Memory (in heap) char angelegt
 
 		// copy str onto char*:
-		memcpy(conString, input + '\0', stringSize);	//legt an stelle in memory
+		memcpy(conString, input + '\0', arr_size);	//legt an stelle in memory
 
 		// insert input to class string
 		string = conString;								// weißt dem Klassenattribut posize_ter zu stelle in memory zu
-		
+		Iterator* object = new Iterator();
+		this->it = *object;
 	}
 
 	String::String(const String& obj)
 	{
-		size_t stringSize = getLength(obj.string, true);
+		arr_size = getLength(obj.string, true);
 
 		// allocate mem with \0:
-		char* conString = new char[stringSize];
+		char* conString = new char[arr_size];
 
 		// copy str onto char*:
-		memcpy(conString, obj.string + '\0', stringSize);
+		memcpy(conString, obj.string + '\0', arr_size);
 
 		// insert input to class string
 		string = conString;
+		Iterator* object = new Iterator();
+		this->it = *object;
 	}
 
 
@@ -43,13 +46,13 @@
 		if (this == &other)
 			return *this; // delete[][]/size=0 would also be ok
 
-		size_t stringSize = getLength(other.string, true);
+		arr_size = getLength(other.string, true);
 
 		// allocate mem with \0:
-		char* conString = new char[stringSize];
+		char* conString = new char[arr_size];
 
 		// copy str onto char*:
-		memcpy(conString, other.string + '\0', stringSize);
+		memcpy(conString, other.string + '\0', arr_size);
 
 		// insert input to class string
 		string = conString;
@@ -129,6 +132,7 @@
 		string = new char[buffer];
 		
 		string = conString;
+		arr_size = buffer;
 	}
 
 	void String::concatenate(const String& object)
@@ -150,35 +154,53 @@
 		string = new char[buffer];
 
 		string = conString;
+		arr_size = buffer;
 	}
 
 	const char* String::c_str() {
 		return this->string;
 	}
 
-	String::Iterator String::begin() const {
-		*this->it.p = string[0]; 
-		std::cout << it.p << std::endl;
-		return it;
+	String::Iterator::Iterator() {
 	}
+
+
+	String::Iterator String::begin() const {
+		return Iterator(&string[-1]);
+	}
+
 	String::Iterator String::end() const {
-		size_t stringSize = 0;
+		return Iterator(&string[arr_size] - 1);
+		/*size_t stringSize = 0;
 		while (string[stringSize] != '\0')
 			stringSize++;
-		*this->it.p = string[stringSize];
+		*this->it.p = &string[stringSize];
 		std::cout << it.p << std::endl;
-		return it;
+		return it;*/
 	}
 
-	bool operator != (const String::Iterator& lhs, const String::Iterator& rhs){
-		return (lhs.p == rhs.p);
+	bool String::Iterator::operator!= (const String::Iterator& other) const{
+		return p != other.p;
+	};
+
+	String::Iterator& String::Iterator::operator++() {
+		++p;return *this; 
 	}
 
-	String::Iterator& String::operator++() {
-		this->it.p++; return this->it;
+	String::Iterator String::Iterator::operator++(int) {
+		Iterator temp(*this); operator++(); return temp; 
 	}
 
+	/*String::Iterator String::Iterator::operator=(const Iterator& other) {
+		this->p = other.p;
+		return *this;
+	}*/
 
+
+
+	char& String::Iterator::operator*() {
+		return *p;
+	};
 
 	
 	String::operator const char* () {

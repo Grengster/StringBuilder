@@ -3,11 +3,11 @@
 #ifndef STRING_HEADER
 #define STRING_HEADER
 #define _CRT_SECURE_NO_WARNINGS
-
+#include <iostream>
 class String {
 
 	const char* string;
-	
+	size_t arr_size;
 
 public:
 	String();
@@ -32,15 +32,20 @@ public:
 	{ // nested class
 		public:
 			char* p = nullptr;
-			int curChar = 0;
-			size_t charCount = 0;
+			Iterator();
+			Iterator(const char* x){};
+			Iterator(const Iterator& mit) : p(mit.p) {};
+			Iterator& operator++();
+			Iterator operator++(int);
+			//Iterator operator=(const Iterator& other);
+			bool operator!=(const Iterator& rhs) const;
+			char& operator*();
 	};
 	Iterator it;
 
 	String::Iterator begin() const;
 	String::Iterator end() const;
-	friend bool operator != (const Iterator& lhs, const Iterator& rhs);
-	String::Iterator& operator++();
+	
 
 	operator const char* ();
 
