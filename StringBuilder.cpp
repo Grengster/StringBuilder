@@ -1,207 +1,228 @@
-// StringBuilder.cpp : This file contains the 'main' function. Program execution begins and ends there.
+ï»¿// StringBuilder.cpp : This file contains the 'main' function. Program execution begins and ends there.
 //
 
 #include "StringBuilderHeader.h"
 #include <iostream>
+#include <cstring>
 
-	String::String() = default;
+String::String() = default;
 
-	String::String(const char* input)
-	{
-		//size_t buffer = sizeof(input);
-		arr_size = getLength(input, true);
+String::String(const char* input) {
+    //size_t buffer = sizeof(input);
+    arr_size = getLength(input, true);
 
-		// allocate mem with \0:
-		char* conString = new char[arr_size];			//Memory (in heap) char angelegt
+    // allocate mem with \0:
+    char* conString = new char[arr_size];            //Memory (in heap) char angelegt
 
-		// copy str onto char*:
-		memcpy(conString, input + '\0', arr_size);	//legt an stelle in memory
+    // copy str onto char*:
+    memcpy(conString, &input['\0'], arr_size);    //legt an stelle in memory
 
-		// insert input to class string
-		string = conString;								// weißt dem Klassenattribut posize_ter zu stelle in memory zu
-	}
+    // insert input to class string
+    string = conString;                                // weiï¿½t dem Klassenattribut posize_ter zu stelle in memory zu
+}
 
-	String::String(const String& obj)
-	{
-		arr_size = getLength(obj.string, true);
+String::String(const String & obj) {
+    arr_size = getLength(obj.string, true);
 
-		// allocate mem with \0:
-		char* conString = new char[arr_size];
+    // allocate mem with \0:
+    char* conString = new char[arr_size];
 
-		// copy str onto char*:
-		memcpy(conString, obj.string + '\0', arr_size);
+    // copy str onto char*:
+    memcpy(conString, &obj.string['\0'], arr_size);
 
-		// insert input to class string
-		string = conString;
-	}
-
+    // insert input to class string
+    string = conString;
+}
 
 
-	String& String::operator= (const String& other) noexcept
-	{
-		if (this == &other)
-			return *this; // delete[][]/size=0 would also be ok
+String& String::operator=(const String & other) noexcept {
+    if (this == &other)
+        return *this; // delete[][]/size=0 would also be ok
 
-		arr_size = getLength(other.string, true);
+    arr_size = getLength(other.string, true);
 
-		// allocate mem with \0:
-		char* conString = new char[arr_size];
+    // allocate mem with \0:
+    char* conString = new char[arr_size];
 
-		// copy str onto char*:
-		memcpy(conString, other.string + '\0', arr_size);
+    // copy str onto char*:
+    memcpy(conString, &other.string['\0'], arr_size);
 
-		// insert input to class string
-		string = conString;
-		return *this;
-	}
+    // insert input to class string
+    string = conString;
+    return *this;
+}
 
-	String& String::operator=(String&& other) noexcept
-	{
-		string = std::move(other.string);
-		delete[] other.string;
-		other.string = nullptr; // move const deletes value of other obj, nullptr for safety
-		return *this;
-	}
+String& String::operator=(String && other) noexcept {
+    string = std::move(other.string);
+    delete[] other.string;
+    other.string = nullptr; // move const deletes value of other obj, nullptr for safety
+    return *this;
+}
 
-	String String::operator+= (const String& other) 
-	{
-		String newString(this->string);
-		newString.concatenate(other);	//returns current object with added other object, if new object is needed,
-		this->~String();
-		*this = newString;
-		return *this;
-	}  
+String String::operator+=(const String & other) {
+    String newString(this->string);
+    newString.concatenate(other);    //returns current object with added other object, if new object is needed,
+    this->~String();
+    *this = newString;
+    return *this;
+}
 
-	String String::operator+= (const char* string)
-	{
-		String newString(this->string);
-		newString.concatenate(string);
-		this->~String();
-		*this = newString;
-		return *this;
-	}
+String String::operator+=(const char* string) {
+    String newString(this->string);
+    newString.concatenate(string);
+    this->~String();
+    *this = newString;
+    return *this;
+}
 
-	String String::operator+ (const String& other)
-	{
-		String newString(this->string);
-		newString.concatenate(other);	//returns current object with added other object, if new object is needed,
-		return newString;				//just create new String, add this first and then other, return new object
-	}
+String String::operator+(const String & other) {
+    String newString(this->string);
+    newString.concatenate(other);    //returns current object with added other object, if new object is needed,
+    return newString;                //just create new String, add this first and then other, return new object
+}
 
-	String String::operator+ (const char* string)
-	{
-		String newString(this->string);
-		newString.concatenate(string);	//returns current object with added other object, if new object is needed,
-		return newString;
-	}
+String String::operator+(const char* string) {
+    String newString(this->string);
+    newString.concatenate(string);    //returns current object with added other object, if new object is needed,
+    return newString;
+}
 
 
-	size_t String::getLength(const char* string, bool withNull = false)
-	{
-		size_t stringSize = 0;
-		while (string[stringSize] != '\0')
-			stringSize++;
-		if(withNull) stringSize++;
-		return stringSize;
-	}
+size_t String::getLength(const char* string, bool withNull = false) {
+    size_t stringSize = 0;
+    while (string[stringSize] != '\0')
+        stringSize++;
+    if (withNull) stringSize++;
+    return stringSize;
+}
 
-	const char* String::getString()
-	{
-		return string;
-	}
+const char* String::getString() {
+    return string;
+}
 
-	void String::concatenate(const char* input) 
-	{
-		// calculate the required buffer size (also accounting for the null terminator):
-		size_t stringSize = getLength(string);
+void String::concatenate(const char* input) {
+    // calculate the required buffer size (also accounting for the null terminator):
+    size_t stringSize = getLength(string);
 
-		size_t buffer = stringSize + sizeof(input) + 2;
-		
-		// allocate enough memory for the concatenated string:
-		char* conString = new char[buffer];
+    size_t buffer = stringSize + sizeof(input) + 2;
 
-		memcpy(conString, string, stringSize);
+    // allocate enough memory for the concatenated string:
+    char* conString = new char[buffer];
 
-		memcpy(conString + stringSize, input + '\0', sizeof(input) + 2);
+    memcpy(conString, string, stringSize);
 
-		delete[] string;
-		string = new char[buffer];
-		
-		string = conString;
-		arr_size = buffer;
-	}
+    memcpy(conString + stringSize, &input['\0'], sizeof(input) + 2);
 
-	void String::concatenate(const String& object)
-	{
-		// calculate the required buffer size (also accounting for the null terminator):
-		size_t stringSize = getLength(string);
-		size_t objectSize = getLength(object.string);
+    delete[] string;
+    string = new char[buffer];
 
-		size_t buffer = stringSize + objectSize + 1;
+    string = conString;
+    arr_size = buffer;
+}
 
-		// allocate enough memory for the concatenated string:
-		char* conString = new char[buffer];
+void String::concatenate(const String & object) {
+    // calculate the required buffer size (also accounting for the null terminator):
+    size_t stringSize = getLength(string);
+    size_t objectSize = getLength(object.string);
 
-		memcpy(conString, string, stringSize);
+    size_t buffer = stringSize + objectSize + 1;
 
-		memcpy(conString + stringSize, object.string + '\0', objectSize + 1);
+    // allocate enough memory for the concatenated string:
+    char* conString = new char[buffer];
 
-		delete[] string;
-		string = new char[buffer];
+    memcpy(conString, string, stringSize);
 
-		string = conString;
-		arr_size = buffer;
-	}
+    memcpy(conString + stringSize, &object.string['\0'], objectSize + 1);
 
-	const char* String::c_str() {
-		return this->string;
-	}
+    delete[] string;
+    string = new char[buffer];
+
+    string = conString;
+    arr_size = buffer;
+}
+
+const char* String::c_str() {
+    return this->string;
+}
 
 
-	String::Iterator String::begin() const {
-		return Iterator(&string[0]);
-	}
+String::rIterator String::rBegin() const {
+    return rIterator(&string[arr_size] - 2);
+}
 
-	String::Iterator String::end() const {
-		return Iterator(&string[arr_size] - 1);
-		/*size_t stringSize = 0;
-		while (string[stringSize] != '\0')
-			stringSize++;
-		*this->it.p = &string[stringSize];
-		std::cout << it.p << std::endl;
-		return it;*/
-	}
+String::rIterator String::rEnd() const {
+    return rIterator(&string[-1]);
+}
 
-	bool String::Iterator::operator!= (const String::Iterator& other) const{
-		return p != other.p;
-	};
+String::Iterator String::begin() const {
+    return Iterator(&string[0]);
+}
 
-	String::Iterator& String::Iterator::operator++() {
-		++p;return *this; 
-	}
+String::Iterator String::end() const {
+    return Iterator(&string[arr_size] - 1);
+}
 
-	String::Iterator String::Iterator::operator++(int) {
-		Iterator temp(*this); operator++(); return temp; 
-	}
+bool String::Iterator::operator!=(const String::Iterator & other) const {
+    return p != other.p;
+};
 
-	/*String::Iterator String::Iterator::operator=(const Iterator& other) {
-		this->p = other.p;
-		return *this;
-	}*/
+String::Iterator& String::Iterator::operator++() {
+    ++p;
+    return *this;
+}
+
+String::Iterator String::Iterator::operator++(int) {
+    p += sizeof(char);
+    return *this;
+}
+
+char String::Iterator::operator*() const {
+    return *p;
+}
+
+String::Iterator::Iterator(char* string) : p(string) {
+
+}
+
+String::Iterator::Iterator(const String::Iterator &other) : p(other.p) {
+
+};
+
+String::operator const char* () {
+    return this->string;
+}
 
 
 
-	char& String::Iterator::operator*() {
-		return *p;
-	};
+String::rIterator::rIterator(char* string) : p(string) {
 
-	
-	String::operator const char* () {
-		return this->string;
-	}
+}
 
-	int puts(String obj)
-	{
-		std::cout << obj.getString() << std::endl;
-		return 1;
-	}
+String::rIterator::rIterator(const String::rIterator& other) : p(other.p) {
+
+};
+
+String::rIterator& String::rIterator::operator++() {
+    p -= sizeof(char);
+    return *this;
+}
+
+String::rIterator String::rIterator::operator++(int) {
+    p -= sizeof(char);
+    return *this;
+}
+
+bool String::rIterator::operator!=(const String::rIterator& other) const {
+    return p != other.p;
+};
+
+
+char String::rIterator::operator*() const {
+    return *p;
+}
+
+
+int puts(String obj) {
+    std::cout << obj.getString() << std::endl;
+    return 1;
+}

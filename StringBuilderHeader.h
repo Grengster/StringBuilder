@@ -3,50 +3,76 @@
 #ifndef STRING_HEADER
 #define STRING_HEADER
 #define _CRT_SECURE_NO_WARNINGS
+
 #include <iostream>
+
 class String {
 
-	const char* string;
-	size_t arr_size;
+    char* string{};
+    size_t arr_size{};
 
 public:
-	String();
-	String(const char* string); //copy const
-	String(const String& obj); //copy const
-	String& operator= (const String& other) noexcept;
-	String& operator= (String&& other) noexcept; //move const
-	String operator+= (const String& other);
-	String operator+= (const char* string);
-	String operator+ (const String& other);
-	String operator+ (const char* string);
-	
-	//class Iterator;
-	size_t getLength(const char* string, bool withNull);
-	const char* getString();
-	void concatenate(const char* string);
-	void concatenate(const String& object);
-	const char* c_str();
-	~String() { delete string; }	
-	
-	class Iterator : public std::iterator<std::input_iterator_tag, int>
-	{ // nested class
-		public:
-			char* p;
-			Iterator(char* x = nullptr) : p(x) {};
-			Iterator(const Iterator& mit) : p(mit.p) {};
-			Iterator& operator++();
-			Iterator operator++(int);
-			//Iterator operator=(const Iterator& other);
-			bool operator!=(const Iterator& rhs) const;
-			char& operator*();
-	};
-	Iterator it;
+    String();
 
-	String::Iterator begin() const;
-	String::Iterator end() const;
-	
+    explicit String(const char* string); //copy const
+    String(const String& obj); //copy const
+    String& operator=(const String& other) noexcept;
 
-	operator const char* ();
+    String& operator=(String&& other) noexcept; //move const
+    String operator+=(const String& other);
+
+    String operator+=(const char* string);
+
+    String operator+(const String& other);
+
+    String operator+(const char* string);
+
+    //class Iterator;
+    static size_t getLength(const char* string, bool withNull);
+
+    const char* getString();
+
+    void concatenate(const char* string);
+
+    void concatenate(const String& object);
+
+    const char* c_str();
+
+    ~String() { delete string; }
+
+    class Iterator : public std::iterator<std::input_iterator_tag, char> { // nested class
+    public:
+
+        char* p;
+
+        explicit Iterator(pointer x = nullptr);
+        Iterator(const Iterator& other);
+        Iterator& operator++();
+        String::Iterator operator++(int);
+        bool operator!=(const Iterator& other) const;
+        char operator*() const;
+    };
+
+    class rIterator : public Iterator
+    {
+    public:
+        char* p;
+        explicit rIterator(pointer x = nullptr);
+        rIterator(const rIterator& other);
+        rIterator& operator++();
+        String::rIterator operator++(int);
+        bool operator!=(const rIterator& other) const;
+        char operator*() const;
+    };
+
+
+    String::rIterator rBegin() const;
+    String::rIterator rEnd() const;
+    String::Iterator begin() const;
+    String::Iterator end() const;
+
+
+    explicit operator const char* ();
 
 };
 

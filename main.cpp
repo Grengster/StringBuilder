@@ -1,18 +1,25 @@
 // StringBuilder.cpp : This file contains the 'main' function. Program execution begins and ends there.
 //
 #include "StringBuilderHeader.h"
+#include <assert.h>
 
-int main()
-{
+int main(){
     //Teil 1
     String myString("Hello");
+    String testString("Hello");
+    
+    assert(*myString.c_str() == *testString.c_str()); //check for same characters
+
     myString.concatenate("World");
-    //myString.getString();
     myString.concatenate(myString);
-    //myString.getString();
+
     String otherString(myString);
+    String test2String("HelloWorldHelloWorld");
+
+    assert(myString.getLength(myString.getString(), 0) == test2String.getLength(test2String.getString(), 0)); //check for same length
+
     String yetAnotherString("AnotherWorld");
-    otherString = yetAnotherString; // overload = operator to overwrite left class with right class || placement new???
+    otherString = yetAnotherString; 
     std::cout << otherString.c_str() << std::endl; 
 
     // Teil 2
@@ -23,10 +30,30 @@ int main()
     s3 += "Hello";
     const String s4 = s3 + "World";
     puts(s4);
-    //Teil 3 //using declarations for iterator char pointer char reference, speichergröße -> character
-    const String test("Hello World"); // how to convert test.begin to it
+    //Teil 3 
+    const String test("Hello World"); 
     for (String::Iterator it = test.begin(); it != test.end(); ++it) { std::cout << *it << '\n'; }
     std::cout << (std::find(test.begin(), test.end(), 'W') != test.end()) << '\n';
-}
 
+    //TESTS
+
+    String test3String("6Chars");
+    assert(test3String.getLength(test3String.c_str(), 0) == 6);
+
+    test3String = testString;
+    assert(*test3String.c_str() == *testString.c_str());
+
+    test3String += testString;
+    String test4String("HelloHello");
+    assert(*test3String.c_str() == *test4String.c_str());
+
+    assert((std::find(test.begin(), test.end(), 'o') != test.end()) == 1);
+    assert((std::find(test.begin(), test.end(), 'S') != test.end()) == 0);
+
+    String::Iterator it = test.begin();
+    assert(*it == 'H');
+    it++;
+    assert(*it != 'H');
+    assert(*it == 'e');
+}
 
