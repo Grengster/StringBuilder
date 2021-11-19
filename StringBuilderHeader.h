@@ -20,7 +20,7 @@ public:
 	String operator+ (const String& other);
 	String operator+ (const char* string);
 	
-	class Iterator;
+	//class Iterator;
 	size_t getLength(const char* string, bool withNull);
 	const char* getString();
 	void concatenate(const char* string);
@@ -28,12 +28,11 @@ public:
 	const char* c_str();
 	~String() { delete string; }	
 	
-	class Iterator
+	class Iterator : public std::iterator<std::input_iterator_tag, int>
 	{ // nested class
 		public:
-			char* p = nullptr;
-			Iterator();
-			Iterator(const char* x){};
+			char* p;
+			Iterator(char* x = nullptr) : p(x) {};
 			Iterator(const Iterator& mit) : p(mit.p) {};
 			Iterator& operator++();
 			Iterator operator++(int);

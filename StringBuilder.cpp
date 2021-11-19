@@ -19,8 +19,6 @@
 
 		// insert input to class string
 		string = conString;								// weißt dem Klassenattribut posize_ter zu stelle in memory zu
-		Iterator* object = new Iterator();
-		this->it = *object;
 	}
 
 	String::String(const String& obj)
@@ -35,8 +33,6 @@
 
 		// insert input to class string
 		string = conString;
-		Iterator* object = new Iterator();
-		this->it = *object;
 	}
 
 
@@ -161,12 +157,9 @@
 		return this->string;
 	}
 
-	String::Iterator::Iterator() {
-	}
-
 
 	String::Iterator String::begin() const {
-		return Iterator(&string[-1]);
+		return Iterator(&string[0]);
 	}
 
 	String::Iterator String::end() const {
