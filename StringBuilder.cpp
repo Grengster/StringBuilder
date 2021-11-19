@@ -8,32 +8,25 @@
 String::String() = default;
 
 String::String(const char* input) {
-    //size_t buffer = sizeof(input);
-    arr_size = getLength(input, true);
-
-    // allocate mem with \0:
-    char* conString = new char[arr_size];            //Memory (in heap) char angelegt
-
-    // copy str onto char*:
-    memcpy(conString, &input['\0'], arr_size);    //legt an stelle in memory
-
-    // insert input to class string
-    string = conString;                                // wei�t dem Klassenattribut posize_ter zu stelle in memory zu
+    arr_size = getLength(input, true);            //set size of string for iterator
+    char* conString = new char[arr_size];         // allocate mem with \0 in heap
+    memcpy(conString, &input['\0'], arr_size);    // copy str onto char*:
+    string = conString;                           // insert input to class string
 }
 
 String::String(const String & obj) {
     arr_size = getLength(obj.string, true);
-
-    // allocate mem with \0:
     char* conString = new char[arr_size];
-
-    // copy str onto char*:
     memcpy(conString, &obj.string['\0'], arr_size);
-
-    // insert input to class string
     string = conString;
 }
 
+String::String(const String&& obj) noexcept {
+    arr_size = getLength(obj.string, true);
+    char* conString = new char[arr_size];
+    memcpy(conString, &obj.string['\0'], arr_size);
+    string = conString;
+}
 
 String& String::operator=(const String & other) noexcept {
     if (this == &other)
@@ -138,7 +131,7 @@ void String::concatenate(const String & object) {
     string = new char[buffer];
 
     string = conString;
-    arr_size = buffer;
+    arr_size = buffer; //set size of string for iterator
 }
 
 const char* String::c_str() {
@@ -147,14 +140,14 @@ const char* String::c_str() {
 
 
 String::rIterator String::rBegin() const {
-    return rIterator(&string[arr_size] - 2);
+    return rIterator(&string[arr_size] - 2); //begins with last char
 }
 
 String::rIterator String::rEnd() const {
     return rIterator(&string[-1]);
 }
 
-String::Iterator String::begin() const {
+String::Iterator String::begin() const { //begins with 1st char
     return Iterator(&string[0]);
 }
 
@@ -163,16 +156,16 @@ String::Iterator String::end() const {
 }
 
 bool String::Iterator::operator!=(const String::Iterator & other) const {
-    return p != other.p;
+    return p != other.p; //returns true if p != other.p
 };
 
 String::Iterator& String::Iterator::operator++() {
-    ++p;
+    ++p;  //increase pointer
     return *this;
 }
 
 String::Iterator String::Iterator::operator++(int) {
-    p += sizeof(char);
+    p += sizeof(char); //increase by 4 bytes
     return *this;
 }
 

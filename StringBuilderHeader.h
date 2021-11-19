@@ -14,37 +14,27 @@ class String {
 public:
     String();
 
-    explicit String(const char* string); //copy const
-    String(const String& obj); //copy const
-    String& operator=(const String& other) noexcept;
-
-    String& operator=(String&& other) noexcept; //move const
+    explicit String(const char* string); 
+    String(const String& obj); //copy constructor
+    String(const String&& obj) noexcept; //move constructor
+    String& operator=(const String& other) noexcept; //Copy assignment operator
+    String& operator=(String&& other) noexcept;  //Move assignment operator
     String operator+=(const String& other);
-
     String operator+=(const char* string);
-
     String operator+(const String& other);
-
     String operator+(const char* string);
 
-    //class Iterator;
     static size_t getLength(const char* string, bool withNull);
-
     const char* getString();
-
     void concatenate(const char* string);
-
     void concatenate(const String& object);
-
     const char* c_str();
-
     ~String() { delete string; }
 
-    class Iterator : public std::iterator<std::input_iterator_tag, char> { // nested class
+    class Iterator : public std::iterator<std::input_iterator_tag, char> // nested class
+    { 
     public:
-
         char* p;
-
         explicit Iterator(pointer x = nullptr);
         Iterator(const Iterator& other);
         Iterator& operator++();
@@ -65,12 +55,10 @@ public:
         char operator*() const;
     };
 
-
     String::rIterator rBegin() const;
     String::rIterator rEnd() const;
     String::Iterator begin() const;
     String::Iterator end() const;
-
 
     explicit operator const char* ();
 
