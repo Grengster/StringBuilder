@@ -2,7 +2,6 @@
 
 #ifndef STRING_HEADER
 #define STRING_HEADER
-#define _CRT_SECURE_NO_WARNINGS
 
 #include <iostream>
 
@@ -21,14 +20,14 @@ public:
     String& operator=(String&& other) noexcept;  //Move assignment operator
     String operator+=(const String& other);
     String operator+=(const char* string);
-    String operator+(const String& other);
-    String operator+(const char* string);
+    String operator+(const String& other) const;
+    String operator+(const char* string) const;
 
     static size_t getLength(const char* string, bool withNull);
-    const char* getString();
-    void concatenate(const char* string);
+    const char* getString() const;
+    void concatenate(const char* input);
     void concatenate(const String& object);
-    const char* c_str();
+    const char* c_str() const;
     ~String() { delete string; }
 
     class Iterator : public std::iterator<std::input_iterator_tag, char> // nested class
@@ -60,10 +59,8 @@ public:
     String::Iterator begin() const;
     String::Iterator end() const;
 
-    explicit operator const char* ();
+    operator const char* () const;
 
 };
-
-int puts(String obj);
 
 #endif

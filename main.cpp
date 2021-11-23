@@ -6,7 +6,7 @@
 int main(){
     //Teil 1
     String myString("Hello");
-    String testString("Hello");
+    const String testString("Hello");
     
     assert(*myString.c_str() == *testString.c_str()); //check for same characters
 
@@ -14,7 +14,7 @@ int main(){
     myString.concatenate(myString);
 
     String otherString(myString);
-    String test2String("HelloWorldHelloWorld");
+    const String test2String("HelloWorldHelloWorld");
 
     assert(myString.getLength(myString.getString(), 0) == test2String.getLength(test2String.getString(), 0)); //check for same length
 
@@ -30,6 +30,7 @@ int main(){
     s3 += "Hello";
     const String s4 = s3 + "World";
     puts(s4);
+
     //Teil 3 
     const String test("Hello World"); 
     for (String::Iterator it = test.begin(); it != test.end(); ++it) { std::cout << *it << '\n'; }
@@ -44,7 +45,7 @@ int main(){
     assert(*test3String.c_str() == *testString.c_str());
 
     test3String += testString;
-    String test4String("HelloHello");
+    const String test4String("HelloHello");
     assert(*test3String.c_str() == *test4String.c_str());
 
     assert((std::find(test.begin(), test.end(), 'o') != test.end()) == 1);
@@ -52,7 +53,7 @@ int main(){
 
     String::Iterator it = test.begin();
     assert(*it == 'H');
-    it++;
+    ++it;
     assert(*it != 'H');
     assert(*it == 'e');
 }
