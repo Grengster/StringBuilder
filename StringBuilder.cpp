@@ -5,19 +5,22 @@
 #include <iostream>
 #include <cstring>
 
-String::String() = default;
+String::String()
+{
+	
+}
 
 String::String(const char* input)
 {
-	arr_size = getLength(input, true); //set size of string for iterator
-	const auto conString = new char[arr_size]; // allocate mem with \0 in heap
-	memcpy(conString, &input['\0'], arr_size); // copy str onto char*:
-	string = conString; // insert input to class string
+	arr_size = calcLength(input);		//set size of string for iterator
+	const auto conString = new char[arr_size];		// allocate mem with \0 in heap
+	memcpy(conString, &input['\0'], arr_size);		// copy str onto char*:
+	string = conString;								// insert input to class string
 }
 
 String::String(const String& obj)
 {
-	arr_size = getLength(obj.string, true);
+	arr_size = calcLength(obj.c_str());
 	const auto conString = new char[arr_size];
 	memcpy(conString, &obj.string['\0'], arr_size);
 	string = conString;
@@ -25,7 +28,7 @@ String::String(const String& obj)
 
 String::String(const String&& obj) noexcept
 {
-	arr_size = getLength(obj.string, true);
+	arr_size = calcLength(obj.c_str());
 	const auto conString = new char[arr_size];
 	memcpy(conString, &obj.string['\0'], arr_size);
 	string = conString;
@@ -36,7 +39,7 @@ String& String::operator=(const String& other) noexcept
 	if (this == &other)
 		return *this; // delete[][]/size=0 would also be ok
 
-	arr_size = getLength(other.string, true);
+	arr_size = getLength();
 
 	// allocate mem with \0:
 	const auto conString = new char[arr_size];
@@ -53,49 +56,49 @@ String& String::operator=(String&& other) noexcept
 {
 	string = other.string;
 	delete[] other.string;
-	other.string = nullptr; // move const deletes value of other obj, nullptr for safety
+	other.string = nullptr; //move const deletes value of other obj, nullptr for safety
+	return *this;
+}
+
+String String::operator+=(const char* string) const
+//Redundant
+{
+	//returns current object with added other object, if new object is needed,
+	this->concatenate(string);
 	return *this;
 }
 
 String String::operator+=(const String& other)
 {
-	String newString(this->string);
-	newString.concatenate(other); //returns current object with added other object, if new object is needed,
-	this->~String();
-	*this = newString;
-	return *this;
-}
-
-String String::operator+=(const char* string)
-{
-	String newString(this->string);
-	newString.concatenate(string);
-	this->~String();
-	*this = newString;
-	return *this;
-}
-
-String String::operator+(const String& other) const
-{
-	String newString(this->string);
-	newString.concatenate(other); //returns current object with added other object, if new object is needed,
-	return newString; //just create new String, add this first and then other, return new object
+	return *this+=other.string;
 }
 
 String String::operator+(const char* string) const
 {
 	String newString(this->string);
-	newString.concatenate(string); //returns current object with added other object, if new object is needed,
-	return newString;
+	newString.concatenate(string);	//returns current object with added other object, if new object is needed,
+	return newString;				//just create new String, add this first and then other, return new object
 }
 
+String String::operator+(const String& other) const
+{
+	return *this + other.string;
+}
 
-size_t String::getLength(const char* string, bool withNull = false)
+size_t String::getLength() const
 {
 	size_t stringSize = 0;
-	while (string[stringSize] != '\0')
+	while (this->string[stringSize] != '\0')
 		stringSize++;
-	if (withNull) stringSize++;
+	return stringSize;
+}
+
+size_t String::calcLength(const char* input) const
+{
+	size_t stringSize = 0;
+	while (input[stringSize] != '\0')
+		stringSize++;
+	stringSize++;
 	return stringSize;
 }
 
@@ -104,19 +107,18 @@ const char* String::getString() const
 	return string;
 }
 
-void String::concatenate(const char* input)
+void String::concatenate(const char* input) const
 {
 	// calculate the required buffer size (also accounting for the null terminator):
-	const size_t stringSize = getLength(string);
-
-	const size_t buffer = stringSize + sizeof(input) + 2;
+	const size_t stringSize = getLength();
+	const size_t buffer = stringSize + calcLength(input);
 
 	// allocate enough memory for the concatenated string:
-	const auto conString = new char[buffer];
+	char* conString = new char[buffer];
 
 	memcpy(conString, string, stringSize);
 
-	memcpy(conString + stringSize, &input['\0'], sizeof(input) + 2);
+	memcpy(conString + stringSize, input + '\0', calcLength(input));
 
 	delete[] string;
 	string = new char[buffer];
@@ -125,26 +127,9 @@ void String::concatenate(const char* input)
 	arr_size = buffer;
 }
 
-void String::concatenate(const String& object)
+void String::concatenate(const String& object) const
 {
-	// calculate the required buffer size (also accounting for the null terminator):
-	const size_t stringSize = getLength(string);
-	const size_t objectSize = getLength(object.string);
-
-	const size_t buffer = stringSize + objectSize + 1;
-
-	// allocate enough memory for the concatenated string:
-	const auto conString = new char[buffer];
-
-	memcpy(conString, string, stringSize);
-
-	memcpy(conString + stringSize, &object.string['\0'], objectSize + 1);
-
-	delete[] string;
-	string = new char[buffer];
-
-	string = conString;
-	arr_size = buffer; //set size of string for iterator
+	this->concatenate(object.c_str());
 }
 
 const char* String::c_str() const

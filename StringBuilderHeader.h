@@ -7,28 +7,29 @@
 
 class String {
 
-    char* string{};
-    size_t arr_size{};
+    mutable char* string{};
+    mutable size_t arr_size{}; //unsigned int
 
 public:
     String();
 
     explicit String(const char* string); 
-    String(const String& obj); //copy constructor
-    String(const String&& obj) noexcept; //move constructor
-    String& operator=(const String& other) noexcept; //Copy assignment operator
-    String& operator=(String&& other) noexcept;  //Move assignment operator
+    String(const String& obj);                          //copy constructor
+    String(const String&& obj) noexcept;                //move constructor
+    String& operator=(const String& other) noexcept;    //Copy assignment operator
+    String& operator=(String&& other) noexcept;         //Move assignment operator
     String operator+=(const String& other);
-    String operator+=(const char* string);
+    String operator+=(const char* string) const;
     String operator+(const String& other) const;
     String operator+(const char* string) const;
 
-    static size_t getLength(const char* string, bool withNull);
+    size_t getLength() const;
+    size_t calcLength(const char* input) const;
     const char* getString() const;
-    void concatenate(const char* input);
-    void concatenate(const String& object);
+    void concatenate(const char* input) const;
+    void concatenate(const String& object) const;
     const char* c_str() const;
-    ~String() { delete string; }
+    ~String() { delete[] string; }
 
     class Iterator : public std::iterator<std::input_iterator_tag, char> // nested class
     { 

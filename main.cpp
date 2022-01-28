@@ -16,7 +16,7 @@ int main(){
     String otherString(myString);
     const String test2String("HelloWorldHelloWorld");
 
-    assert(myString.getLength(myString.getString(), 0) == test2String.getLength(test2String.getString(), 0)); //check for same length
+    assert(myString.getLength() == test2String.getLength()); //check for same length
 
     String yetAnotherString("AnotherWorld");
     otherString = yetAnotherString; 
@@ -24,6 +24,7 @@ int main(){
 
     // Teil 2
     String s1("Hello");
+    s1.getLength();
     const String s2("World");
     s1 += s2;
     String s3 = s1 + s2;
@@ -39,7 +40,7 @@ int main(){
     //TESTS
 
     String test3String("6Chars");
-    assert(test3String.getLength(test3String.c_str(), 0) == 6);
+    assert(test3String.getLength() == 6);
 
     test3String = testString;
     assert(*test3String.c_str() == *testString.c_str());
