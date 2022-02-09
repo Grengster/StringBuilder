@@ -120,7 +120,7 @@ void String::concatenate(const char* input) const
 
 	memcpy(conString + stringSize, input + '\0', calcLength(input));
 
-	delete[] string;
+	//delete[] string;
 	string = new char[buffer];
 
 	string = conString;

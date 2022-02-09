@@ -4,6 +4,7 @@
 #include <assert.h>
 
 int main(){
+   
     //Teil 1
     String myString("Hello");
     const String testString("Hello");
@@ -57,5 +58,14 @@ int main(){
     ++it;
     assert(*it != 'H');
     assert(*it == 'e');
+
+    //delete test4String;
+    /*delete myString;
+    delete test;
+    delete testString;
+    delete test2String;
+    delete test3String;
+    delete test4String;*/
+    _CrtDumpMemoryLeaks();
 }
 

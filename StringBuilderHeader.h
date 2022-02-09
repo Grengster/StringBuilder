@@ -29,7 +29,10 @@ public:
     void concatenate(const char* input) const;
     void concatenate(const String& object) const;
     const char* c_str() const;
-    ~String() { delete[] string; }
+    ~String()
+    {
+	    delete[] string;
+    }
 
     class Iterator : public std::iterator<std::input_iterator_tag, char> // nested class
     { 
