@@ -1,17 +1,18 @@
 // StringBuilder.cpp : This file contains the 'main' function. Program execution begins and ends there.
 //
-#include "StringBuilderHeader.h"
+#include "String.h"
 #include <assert.h>
 
-int main(){
-   
+int main() {
+    {
     //Teil 1
     String myString("Hello");
     const String testString("Hello");
-    
+
     assert(*myString.c_str() == *testString.c_str()); //check for same characters
 
     myString.concatenate("World");
+
     myString.concatenate(myString);
 
     String otherString(myString);
@@ -20,8 +21,8 @@ int main(){
     assert(myString.getLength() == test2String.getLength()); //check for same length
 
     String yetAnotherString("AnotherWorld");
-    otherString = yetAnotherString; 
-    std::cout << otherString.c_str() << std::endl; 
+    otherString = yetAnotherString;
+    std::cout << otherString.c_str() << std::endl;
 
     // Teil 2
     String s1("Hello");
@@ -34,7 +35,7 @@ int main(){
     puts(s4);
 
     //Teil 3 
-    const String test("Hello World"); 
+    const String test("Hello World");
     for (String::Iterator it = test.begin(); it != test.end(); ++it) { std::cout << *it << '\n'; }
     std::cout << (std::find(test.begin(), test.end(), 'W') != test.end()) << '\n';
 
@@ -59,13 +60,8 @@ int main(){
     assert(*it != 'H');
     assert(*it == 'e');
 
-    //delete test4String;
-    /*delete myString;
-    delete test;
-    delete testString;
-    delete test2String;
-    delete test3String;
-    delete test4String;*/
+    }
     _CrtDumpMemoryLeaks();
+    return 0;
 }
 

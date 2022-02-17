@@ -1,21 +1,28 @@
 ﻿// StringBuilder.cpp : This file contains the 'main' function. Program execution begins and ends there.
 //
 
-#include "StringBuilderHeader.h"
+#include "String.h"
 #include <iostream>
 #include <cstring>
+
+
 
 String::String()
 {
 	
 }
 
+String::~String() {
+	delete[] this->string;
+}
+
 String::String(const char* input)
 {
 	arr_size = calcLength(input);		//set size of string for iterator
 	const auto conString = new char[arr_size];		// allocate mem with \0 in heap
-	memcpy(conString, &input['\0'], arr_size);		// copy str onto char*:
-	string = conString;								// insert input to class string
+	memcpy(conString, input + '\0', arr_size);		// copy str onto char*:
+	string = conString;
+	//this->string = conString;								// insert input to class string
 }
 
 String::String(const String& obj)
@@ -32,31 +39,37 @@ String::String(const String&& obj) noexcept
 	const auto conString = new char[arr_size];
 	memcpy(conString, &obj.string['\0'], arr_size);
 	string = conString;
+	//obj.string = nullptr; //->leads to memory leak, although syntax is that other string object is reset
+	//obj.arr_size = 0;
 }
 
 String& String::operator=(const String& other) noexcept
 {
 	if (this == &other)
 		return *this; // delete[][]/size=0 would also be ok
+	this->string = nullptr;
 
-	arr_size = getLength();
 
 	// allocate mem with \0:
-	const auto conString = new char[arr_size];
+	const auto conString = new char[calcLength(other.string)];
 
 	// copy str onto char*:
-	memcpy(conString, &other.string['\0'], arr_size);
+	memcpy(conString, &other.string['\0'], calcLength(other.string));
 
 	// insert input to class string
 	string = conString;
+	arr_size = calcLength(conString);
+
 	return *this;
 }
 
 String& String::operator=(String&& other) noexcept
 {
-	string = other.string;
-	delete[] other.string;
+	delete[] string;
+	this->string = other.string;
+	this->arr_size = calcLength(other.string);
 	other.string = nullptr; //move const deletes value of other obj, nullptr for safety
+	delete[] other.string;
 	return *this;
 }
 
@@ -120,16 +133,15 @@ void String::concatenate(const char* input) const
 
 	memcpy(conString + stringSize, input + '\0', calcLength(input));
 
-	//delete[] string;
-	string = new char[buffer];
-
+	delete[] string;
+	
 	string = conString;
 	arr_size = buffer;
 }
 
 void String::concatenate(const String& object) const
 {
-	this->concatenate(object.c_str());
+	this->concatenate(object.string);
 }
 
 const char* String::c_str() const

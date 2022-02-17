@@ -12,7 +12,7 @@ class String {
 
 public:
     String();
-
+    ~String();
     explicit String(const char* string); 
     String(const String& obj);                          //copy constructor
     String(const String&& obj) noexcept;                //move constructor
@@ -29,10 +29,6 @@ public:
     void concatenate(const char* input) const;
     void concatenate(const String& object) const;
     const char* c_str() const;
-    ~String()
-    {
-	    delete[] string;
-    }
 
     class Iterator : public std::iterator<std::input_iterator_tag, char> // nested class
     { 
